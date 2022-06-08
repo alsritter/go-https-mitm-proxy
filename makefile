@@ -1,0 +1,4 @@
+
+.RUN
+RUN:
+	go run .
