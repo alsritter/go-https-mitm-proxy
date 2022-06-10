@@ -2,7 +2,6 @@ package proxy
 
 import (
 	"crypto/tls"
-	"github.com/alsritter/https-proxy/cert_server"
 	"io"
 	"log"
 	"net"
@@ -40,7 +39,7 @@ func Serve() {
 			if r.Method == http.MethodConnect {
 				log.Println(r.URL.Hostname())
 				// 开启伪造的 https 服务
-				cert_server.CreateFakeHttpsWebSite(r.URL.Hostname(), func() {
+				CreateFakeHttpsWebSite(r.URL.Hostname(), func() {
 					//设置超时防止大量超时导致服务器资源不大量占用
 					srvSocket, err := net.DialTimeout("tcp", "127.0.0.1:9080", 10*time.Second)
 					if err != nil {

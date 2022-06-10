@@ -1,4 +1,4 @@
-package cert_server
+package proxy
 
 import (
 	"crypto/rsa"
@@ -57,7 +57,20 @@ func CreateFakeHttpsWebSite(domain string, successFun func()) {
 		waitGroup.Done()
 		if e := http.ServeTLS(l, &proxyServer{
 			handler: func(pW http.ResponseWriter, pR *http.Request) {
-				_, _ = pW.Write([]byte("Hello, world!"))
+				_, _ = pW.Write([]byte(`
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GitHub</title>
+</head>
+<body>
+  这是一个伪造的 GitHub 站点~
+</body>
+</html>
+`))
 			}}, "server_cert.pem", "server_key.pem"); e != nil {
 			log.Fatal(e)
 		}
