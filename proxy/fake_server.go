@@ -3,6 +3,7 @@ package proxy
 import (
 	"crypto/rsa"
 	"crypto/x509"
+	"fmt"
 	"io/fs"
 	"io/ioutil"
 	"log"
@@ -54,10 +55,12 @@ func CreateFakeHttpsWebSite(domain string, successFun func()) {
 		if err != nil {
 			log.Fatal(err)
 		}
+
 		// Signal that server is open for business.
 		waitGroup.Done()
 		if e := http.ServeTLS(l, &proxyServer{
 			handler: func(pW http.ResponseWriter, pR *http.Request) {
+				fmt.Printf("%#v\n", pR.Form)
 				_, _ = pW.Write([]byte(`
 <!DOCTYPE html>
 <html lang="en">

@@ -1,6 +1,6 @@
 
 test:
-	https_proxy="http://localhost:6789" curl https://github.com
+	https_proxy="http://localhost:6789" curl https://github.com -d'login=emma&password=123'
 
 gen_root_cert:
 	openssl genrsa -out rootCa.key 2048
