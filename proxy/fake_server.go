@@ -3,13 +3,14 @@ package proxy
 import (
 	"crypto/rsa"
 	"crypto/x509"
-	"github.com/alsritter/https-proxy/gen_cert"
 	"io/fs"
 	"io/ioutil"
 	"log"
 	"net"
 	"net/http"
 	"sync"
+
+	"github.com/alsritter/https-proxy/gen_cert"
 )
 
 var rootCert *x509.Certificate
@@ -17,7 +18,7 @@ var rootKey *rsa.PrivateKey
 
 func init() {
 	var err error
-	rootCert, rootKey, err = gen_cert.LoadRootCertificate("./ca.crt", "./ca.key")
+	rootCert, rootKey, err = gen_cert.LoadRootCertificate("./rootCa.crt", "./rootCa.key")
 	if err != nil {
 		log.Fatal(err)
 	}
